@@ -1,4 +1,4 @@
-import { VerticalBox, HorizontalBox, TextArea, Button } from "std-widgets.slint";
+import { VerticalBox, HorizontalBox, TextEdit, Button } from "std-widgets.slint";
 
 export component App {
     in-out property <string> transcription_input;
@@ -6,29 +6,38 @@ export component App {
     in-out property <string> processed_output;
     callback send_selection;
 
-    GridBox {
-        columns: 2;
-        VerticalBox {
-            height: 100%;
-            TextArea {
-                text: transcription_input;
-                wrap: word;
-                placeholder-text: "Transcription Input";
+    VerticalBox {
+        spacing: 5px;
+        padding: 5px;
+
+        // Main Content (Input + Output)
+        HorizontalBox {
+            spacing: 5px;
+
+            // Left Side (Input + Selected Prompt)
+            VerticalBox {
+                spacing: 5px;
+                TextEdit {
+                    text: transcription_input;
+                    placeholder-text: "Transcription Input";
+                }
+                TextEdit {
+                    text: selected_prompt;
+                    placeholder-text: "Selected Prompt";
+                }
             }
-            TextArea {
-                text: selected_prompt;
-                wrap: word;
-                placeholder-text: "Selected Prompt";
+
+            // Right Side (Processed Output)
+            TextEdit {
+                text: processed_output;
+                placeholder-text: "Processed Output";
             }
         }
-        TextArea {
-            text: processed_output;
-            wrap: word;
-            placeholder-text: "Processed Output";
-        }
+
+        // Button (Send Selection)
         Button {
             text: "Send Selection to GPT";
-            clicked => send_selection();
+            clicked => { send_selection(); }
         }
     }
 }

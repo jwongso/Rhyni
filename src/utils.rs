@@ -1,7 +1,7 @@
-use std::collection::HashMap;
+use std::collections::HashMap;
 
 pub fn split_and_normalize(text: &str) -> Vec<String> {
-    text.split_white_space()
+    text.split_whitespace()
         .map(|word| word.chars()
             .filter(|c| c.is_alphanumeric())
             .collect())
@@ -12,7 +12,7 @@ pub fn split_and_normalize(text: &str) -> Vec<String> {
 pub fn merge_strings(a: &str, b: &str) -> String {
     let base = split_and_normalize(a);
     let tail = split_and_normalize(b);
-    let mut index_map: HashMap<String, Vec<usize>> = HasMap::new();
+    let mut index_map: HashMap<String, Vec<usize>> = HashMap::new();
 
     for (i, word) in base.iter().enumerate() {
         index_map.entry(word.clone()).or_default().push(i);
